@@ -505,13 +505,35 @@ font-size: 0.8rem;
 color: var(--gold-primary);
 }
         @media (max-width: 850px) {
+            /* Header */
+            header { padding: 2rem 5% 1.5rem; }
+            /* Hero */
+            .hero { padding: 0 5%; }
+            .hero h1 span { white-space: normal; }
+            .hero p { font-size: 1rem; margin-bottom: 2.5rem; }
+            .hero .btn-glass { padding: 1.1rem 2.5rem !important; font-size: 0.85rem !important; }
+            /* Dashboard / Bento */
+            .section-dashboard { padding: 5rem 5% 6rem; }
+            .dashboard-header { margin-bottom: 4rem; }
+            .dashboard-header h2 { font-size: 2rem; }
+            .dashboard-header p { font-size: 1rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-item { height: auto; min-height: 400px; padding: 2.5rem; }
+            .visual-container { left: 2.5rem; right: 2.5rem; }
+            .bento-item h3 { font-size: 1.4rem; }
+            .bento-item p { font-size: 0.9rem; }
+            /* Boarding Pass */
+            .beta-section { padding: 6rem 5% 5rem; }
+            .invitation-header h2 { font-size: 2.5rem; }
             .boarding-pass { flex-direction: column; }
-.boarding-pass::before, .boarding-pass::after { display: none; }
-.pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; }
-.form-grid { grid-template-columns: 1fr; }
-.form-full { grid-column: span 1; }
-footer { grid-template-columns: 1fr; gap: 3rem; }
-.footer-right { justify-content: flex-start; }
+            .boarding-pass::before, .boarding-pass::after { display: none; }
+            .pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; padding: 2rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-full { grid-column: span 1; }
+            .pass-stub { padding: 2rem 1.5rem; }
+            /* Footer */
+            footer { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 5% 3rem; }
+            .footer-right { justify-content: flex-start; }
         }
 /* Success state */
 .pass-confirmed {
