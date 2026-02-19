@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>June | AI Executive Assistant for Business Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-color: #080808;
+--card-bg: #111111;
+--gold-primary: #D4AF37;
+--gold-soft: #B8860B;
+--gold-muted: rgba(212, 175, 55, 0.1);
+--text-main: #FFFFFF;
+--text-secondary: #A1A1AA;
+--border: rgba(255, 255, 255, 0.06);
+--transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+/* Typography */
+--font-heading: 'Outfit', sans-serif;
+--font-ui: 'Inter', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+background-color: var(--bg-color);
+color: var(--text-main);
+font-family: var(--font-ui);
+line-height: 1.8;
+-webkit-font-smoothing: antialiased;
+}
+/* Top Brand Signature */
+.top-line {
+height: 1px;
+width: 100%;
+background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+position: fixed;
+top: 0;
+z-index: 1000;
+}
+header {
+padding: 3.5rem 8% 2rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: absolute;
+width: 100%;
+z-index: 100;
+}
+.logo {
+font-family: var(--font-heading);
+font-size: 1.5rem;
+font-weight: 500;
+color: var(--text-main);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+letter-spacing: -0.02em;
+}
+.logo-waves { width: 28px; height: 28px; color: var(--gold-primary); }
+.btn-glass {
+font-family: var(--font-ui);
+background: rgba(255, 255, 255, 0.03);
+border: 1px solid var(--border);
+color: var(--text-main);
+padding: 0.75rem 1.8rem;
+border-radius: 12px;
+font-size: 0.85rem;
+font-weight: 500;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+text-decoration: none;
+backdrop-filter: blur(10px);
+transition: var(--transition);
+line-height: 1;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+}
+/* Fixed invisible text on hover by ensuring black color wins over any potential inherited styles */
+.btn-glass:hover {
+background: var(--gold-primary) !important;
+color: #000 !important;
+border-color: var(--gold-primary) !important;
+}
+/* Hero */
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 0 8%;
+background: radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.12), transparent 70%);
+}
+.badge {
+font-family: var(--font-ui);
+font-size: 0.65rem;
+font-weight: 600;
+color: var(--gold-primary);
+text-transform: uppercase;
+letter-spacing: 0.25em;
+border: 1px solid rgba(212, 175, 55, 0.3);
+padding: 8px 18px;
+border-radius: 100px;
+margin-bottom: 2.5rem;
+background: rgba(212, 175, 55, 0.03);
+line-height: 1;
+}
+.hero h1 {
+font-family: var(--font-heading);
+font-size: clamp(3rem, 7vw, 5.5rem);
+font-weight: 500;
+letter-spacing: -0.04em;
+line-height: 1.1;
+margin-bottom: 2.5rem;
+}
+.hero h1 span {
+display: block;
+color: var(--gold-primary);
+font-weight: 500;
+margin-top: 0.1em;
+white-space: nowrap;
+}
+.hero p {
+font-family: var(--font-ui);
+font-size: 1.15rem;
+color: var(--text-secondary);
+max-width: 720px;
+margin-bottom: 4rem;
+font-weight: 300;
+opacity: 0.8;
+line-height: 1.8;
+}
+/* Dashboard Section */
+.section-dashboard {
+padding: 10rem 8% 12rem;
+max-width: 1300px;
+margin: 0 auto;
+}
+.dashboard-header {
+margin-bottom: 7rem;
+max-width: 900px;
+}
+.dashboard-header h2 {
+font-family: var(--font-heading);
+font-size: 3rem;
+letter-spacing: -0.03em;
+line-height: 1.2;
+margin-bottom: 1.5rem;
+font-weight: 500;
+}
+.dashboard-header p {
+font-family: var(--font-ui);
+color: var(--text-secondary);
+font-size: 1.1rem;
+font-weight: 300;
+letter-spacing: 0.02em;
+line-height: 1.8;
+}
+.bento-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 24px;
+}
+.bento-item {
+background: var(--card-bg);
+border: 1px solid var(--border);
+border-radius: 24px;
+padding: 4rem;
+position: relative;
+overflow: hidden;
+transition: var(--transition);
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+height: 540px;
+}
+.bento-item:hover {
+border-color: rgba(212, 175, 55, 0.4);
+background: #151515;
+transform: translateY(-5px);
+}
+.visual-container {
+position: absolute;
+top: 2.5rem;
+left: 4rem;
+right: 4rem;
+height: 240px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+/* AI Thought Engine Animation */
+.thought-engine {
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 20px;
+background: rgba(255,255,255,0.02);
+border-radius: 16px;
+border: 1px solid var(--border);
+}
+.thought-line {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 0.8rem;
+color: var(--text-secondary);
+opacity: 0;
+transform: translateX(-10px);
+animation: stepIn 6s infinite;
+}
+.step-dot {
+width: 6px;
+height: 6px;
+background: var(--gold-primary);
+border-radius: 50%;
+box-shadow: 0 0 10px var(--gold-primary);
+}
+.thought-line:nth-child(2) { animation-delay: 1.5s; }
+.thought-line:nth-child(3) { animation-delay: 3s; }
+.thought-result {
+margin-top: 10px;
+padding-top: 10px;
+border-top: 1px solid var(--border);
+color: var(--gold-primary);
+font-weight: 500;
+opacity: 0;
+animation: resultFade 6s infinite;
+animation-delay: 4.5s;
+display: flex;
+justify-content: space-between;
+}
+@keyframes stepIn {
+0%, 5% { opacity: 0; transform: translateX(-10px); }
+10%, 90% { opacity: 1; transform: translateX(0); }
+95%, 100% { opacity: 0; }
+}
+@keyframes resultFade {
+0% { opacity: 0; }
+10%, 90% { opacity: 1; }
+100% { opacity: 0; }
+}
+.chat-line {
+font-family: var(--font-ui);
+background: rgba(255,255,255,0.03);
+border: 1px solid var(--border);
+padding: 12px 20px;
+border-radius: 14px;
+font-size: 0.85rem;
+margin-bottom: 12px;
+width: fit-content;
+max-width: 100%;
+transform: translateY(20px);
+opacity: 0;
+animation: chatFade 3.5s infinite;
+}
+@keyframes chatFade {
+0%, 5% { opacity: 0; transform: translateY(10px); }
+10%, 85% { opacity: 1; transform: translateY(0); }
+95%, 100% { opacity: 0; transform: translateY(-5px); }
+}
+.pref-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+justify-content: center;
+max-width: 300px;
+}
+.tag {
+background: rgba(255,255,255,0.03);
+border: 1px solid var(--border);
+padding: 8px 16px;
+border-radius: 100px;
+font-size: 0.8rem;
+color: var(--text-secondary);
+animation: tagPulse 4s infinite;
+}
+@keyframes tagPulse {
+0%, 100% { border-color: var(--border); color: var(--text-secondary); background: transparent; }
+33% { border-color: var(--gold-primary); color: var(--gold-primary); background: var(--gold-muted); }
+}
+.tag:nth-child(2) { animation-delay: 1.3s; }
+.tag:nth-child(3) { animation-delay: 2.6s; }
+.bento-item h3 {
+font-family: var(--font-heading);
+font-size: 1.75rem;
+font-weight: 500;
+margin-bottom: 1rem;
+letter-spacing: -0.02em;
+line-height: 1.2;
+}
+.bento-item p {
+font-family: var(--font-ui);
+color: var(--text-secondary);
+font-size: 0.95rem;
+line-height: 1.8;
+max-width: 440px;
+font-weight: 300;
+}
+/* --- Boarding Pass Section --- */
+.beta-section {
+padding: 12rem 8% 10rem;
+background: #000;
+display: flex;
+flex-direction: column;
+align-items: center;
+border-top: 1px solid var(--border);
+}
+.invitation-header {
+text-align: center;
+margin-bottom: 4rem;
+transition: var(--transition);
+}
+.invitation-header h2 {
+font-family: var(--font-heading);
+font-size: 3.5rem;
+margin-bottom: 1rem;
+font-weight: 500;
+letter-spacing: -0.04em;
+}
+.invitation-header p {
+color: var(--text-secondary);
+max-width: 500px;
+margin: 0 auto;
+line-height: 1.6;
+}
+.boarding-pass {
+width: 100%;
+max-width: 800px;
+background: #111;
+border: 1px solid var(--border);
+border-radius: 24px;
+display: flex;
+overflow: hidden;
+position: relative;
+box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+transition: var(--transition);
+}
+.boarding-pass::before,
+.boarding-pass::after {
+content: '';
+position: absolute;
+width: 40px;
+height: 40px;
+background: #000;
+border-radius: 50%;
+left: 70%;
+margin-left: -20px;
+z-index: 5;
+border: 1px solid var(--border);
+}
+.boarding-pass::before { top: -20px; }
+.boarding-pass::after { bottom: -20px; }
+.pass-main {
+flex: 0 0 70%;
+padding: 3rem;
+border-right: 1px dashed var(--border);
+position: relative;
+}
+.pass-stub {
+flex: 1;
+padding: 3rem 2rem;
+background: #151515;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+}
+.pass-header {
+display: flex;
+justify-content: space-between;
+margin-bottom: 3rem;
+border-bottom: 1px solid var(--border);
+padding-bottom: 1rem;
+}
+.pass-label {
+font-size: 0.65rem;
+text-transform: uppercase;
+letter-spacing: 0.15em;
+color: var(--gold-primary);
+margin-bottom: 0.5rem;
+display: block;
+line-height: 1;
+}
+.pass-value {
+font-family: var(--font-heading);
+font-size: 1.25rem;
+font-weight: 500;
+line-height: 1;
+}
+.form-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2rem;
+transition: var(--transition);
+}
+.form-full { grid-column: span 2; position: relative; }
+.pass-input {
+width: 100%;
+background: transparent;
+border: none;
+border-bottom: 1px solid var(--border);
+color: #fff;
+font-family: var(--font-heading);
+font-size: 1.1rem;
+padding: 0.5rem 0;
+transition: var(--transition);
+border-radius: 0;
+}
+.pass-input:focus {
+outline: none;
+border-bottom-color: var(--gold-primary);
+}
+select.pass-input {
+appearance: none;
+cursor: pointer;
+}
+.error-msg {
+color: #ef4444;
+font-size: 0.75rem;
+position: absolute;
+bottom: -20px;
+left: 0;
+display: none;
+}
+.btn-pass-submit {
+margin-top: 3rem;
+width: 100%;
+background: var(--gold-primary);
+color: #000;
+border: none;
+padding: 1.2rem;
+border-radius: 8px;
+font-weight: 600;
+font-family: var(--font-ui);
+text-transform: uppercase;
+letter-spacing: 0.1em;
+font-size: 0.85rem;
+cursor: pointer;
+transition: var(--transition);
+line-height: 1;
+}
+.btn-pass-submit:hover {
+background: #E8D4A0;
+transform: translateY(-2px);
+}
+.barcode {
+width: 100%;
+height: 80px;
+background: repeating-linear-gradient(90deg, #333, #333 2px, transparent 2px, transparent 6px);
+opacity: 0.4;
+}
+.stub-info {
+text-align: center;
+font-family: var(--font-heading);
+}
+/* --- Footer Styles --- */
+footer {
+padding: 8rem 8% 4rem;
+display: grid;
+grid-template-columns: 1.5fr 1fr;
+gap: 4rem;
+color: var(--text-secondary);
+font-size: 0.85rem;
+border-top: 1px solid var(--border);
+background: #080808;
+}
+.footer-left {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+}
+.footer-one-liner {
+font-weight: 300;
+color: var(--text-secondary);
+max-width: 320px;
+line-height: 1.6;
+}
+.footer-entity {
+margin-top: 1.5rem;
+font-size: 0.7rem;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+opacity: 0.5;
+}
+.footer-right {
+display: flex;
+justify-content: flex-end;
+gap: 3rem;
+align-items: flex-start;
+}
+.footer-link {
+color: var(--text-secondary);
+text-decoration: none;
+transition: var(--transition);
+font-size: 0.8rem;
+}
+.footer-link:hover {
+color: var(--gold-primary);
+}
+        @media (max-width: 850px) {
+            .boarding-pass { flex-direction: column; }
+.boarding-pass::before, .boarding-pass::after { display: none; }
+.pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; }
+.form-grid { grid-template-columns: 1fr; }
+.form-full { grid-column: span 1; }
+footer { grid-template-columns: 1fr; gap: 3rem; }
+.footer-right { justify-content: flex-start; }
+        }
+/* Success state */
+.pass-confirmed {
+display: none;
+animation: fadeIn 0.8s forwards;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.confirmed-msg {
+font-family: var(--font-heading);
+font-size: 2rem;
+color: var(--gold-primary);
+margin-bottom: 1rem;
+line-height: 1.1;
+}
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<header>
+<a href="#" class="logo">
+<svg class="logo-waves" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.974 35C5.361 35 0 29.639 0 23.026V11.974C0 5.361 5.361 0 11.974 0H23.026C29.639 0 35 5.361 35 11.974V23.026C35 29.639 29.639 35 23.026 35H11.974Z" fill="#D4AF37"/>
+<path d="M13.7021 15.125C16.7591 13.666 19.1901 11.156 20.5521 8.05396C19.6631 7.11996 18.5061 6.45296 17.2611 6.05296L16.5941 5.82996C16.5441 5.92696 16.5131 6.03296 16.5051 6.14096C15.4371 9.16696 13.2571 11.612 10.3231 12.991C8.27605 13.97 6.76405 15.749 6.05205 17.885L5.83105 18.551C5.92705 18.601 6.03305 18.631 6.14105 18.64C6.98705 18.951 7.83105 19.352 8.63205 19.842C9.78905 17.78 11.5621 16.13 13.7021 15.125ZM26.6031 15.304C24.9401 17.826 22.6161 19.841 19.8851 21.131C17.6181 22.199 15.8821 24.2 15.0821 26.602L14.8591 27.358C15.7231 28.124 16.7391 28.699 17.8401 29.048L18.5061 29.271C18.5571 29.174 18.5871 29.068 18.5961 28.959C19.6631 25.934 21.8431 23.488 24.7781 22.11C26.8241 21.131 28.3811 19.352 29.0491 17.216L29.2711 16.55C28.3371 16.283 27.4471 15.837 26.6031 15.304ZM13.0791 25.047C14.1871 22.37 16.2471 20.199 18.8621 18.952C21.2641 17.796 23.2651 16.018 24.6441 13.838C23.6211 12.859 22.7761 11.747 22.1541 10.413C20.4881 13.459 17.9041 15.903 14.7701 17.396C12.9461 18.241 11.4781 19.709 10.5881 21.488C11.5671 22.423 12.3681 23.579 12.9901 24.868L13.0791 25.047Z" fill="#080808"/>
+</svg>
+            June
+</a>
+<a href="#beta" class="btn-glass">Join Waitlist</a>
+</header>
+<main>
+<section class="hero">
+<div class="badge">Limited Q1 2026 Beta</div>
+<h1>Meet June.<span>Your travel assistant for work</span></h1>
+<p>June lives inside ChatGPT and Claude.<br>Just chat about your work trip, and she'll help you plan it, book it, and handle any changes pro-actively.</p>
+<!-- Removed specific inline color to prevent hover invisibility bug -->
+<a href="#beta" class="btn-glass" style="padding: 1.4rem 3.5rem; font-size: 0.95rem; border-color: var(--gold-primary);">Join Waitlist</a>
+</section>
+<section class="section-dashboard">
+<div class="dashboard-header">
+<h2>June takes the work out of work travel.</h2>
+<p>For busy professionals and SMBs who need a travel EA, without the full-time cost.</p>
+</div>
+<div class="bento-grid">
+<div class="bento-item">
+<div class="visual-container" style="flex-direction: column; align-items: flex-start;">
+<div class="chat-line" style="animation-delay: 0s;">"I'm heading to London next Tuesday."</div>
+<div class="chat-line" style="animation-delay: 0.4s; background: var(--gold-muted); border-color: var(--gold-primary); color: var(--gold-primary); border: 1px solid var(--gold-primary);">"Searching flights with SkyPriority & Virgin Lounge access..."</div>
+</div>
+<h3>Plan trip in a single chat</h3>
+<p>Tell June where you need to be. She'll help you pick the right flight, find a hotel near your venue, and arrange a cab at the airport.</p>
+</div>
+<div class="bento-item">
+<div class="visual-container">
+<div class="pref-tags">
+<div class="tag">Window Seat</div>
+<div class="tag">Marriott Preferred</div>
+<div class="tag">Direct Flights Only</div>
+</div>
+</div>
+<h3>Learns your preferences</h3>
+<p>Window seat, not middle. Marriott, not Hilton. Direct flights when possible. June learns your preferences as you book.</p>
+</div>
+<div class="bento-item">
+<div class="visual-container">
+<div class="thought-engine">
+<div class="thought-line"><span class="step-dot"></span> Scanning Marriott rates...</div>
+<div class="thought-line"><span class="step-dot"></span> Checking Delta miles...</div>
+<div class="thought-line"><span class="step-dot"></span> Applying Sapphire rewards...</div>
+<div class="thought-result">
+<span>Savings secured</span>
+<span>-$260</span>
+</div>
+</div>
+</div>
+<h3>Gets you the best deal</h3>
+<p>June maximizes your airline miles, hotel points, and credit card rewards. If prices drop after booking, she rebooks automatically and refunds the difference.</p>
+</div>
+<div class="bento-item">
+<div class="visual-container">
+<div class="thought-engine">
+<div class="thought-line"><span class="step-dot" style="background: #ef4444; box-shadow: 0 0 10px #ef4444;"></span> Flight UA142: 3h delay detected</div>
+<div class="thought-line"><span class="step-dot"></span> Sourcing alternative connections...</div>
+<div class="thought-line"><span class="step-dot"></span> Updating calendar & clients...</div>
+<div class="thought-result">
+<span>Auto-rebooked</span>
+<span style="color: #22c55e;">Resolved</span>
+</div>
+</div>
+</div>
+<h3>Proactively fixes issues</h3>
+<p>June monitors every trip. When disruptions happen, she can suggest alternatives and re-book them proactively.</p>
+</div>
+</div>
+</section>
+<!-- Boarding Pass / Waitlist -->
+<section id="beta" class="beta-section">
+<div class="invitation-header">
+<h2>Be among the first</h2>
+<p>Limited spots for frequent business travelers.<br>Request early access.</p>
+</div>
+<div id="boardingPassCard" class="boarding-pass">
+<div class="pass-main">
+<div class="pass-header">
+<div>
+<span class="pass-label" id="carrierLabel">Carrier</span>
+<span class="pass-value" id="carrierValue">JUNE</span>
+</div>
+<div style="text-align: right;">
+<span class="pass-label" id="classLabel">Class</span>
+<span class="pass-value" id="classValue">EXECUTIVE</span>
+</div>
+</div>
+<form id="waitlistForm" class="form-grid">
+<div class="form-full">
+<label class="pass-label">Work Email</label>
+<input type="email" id="workEmail" class="pass-input" placeholder="alex@company.com" required>
+<span id="emailError" class="error-msg">Please use your work email address.</span>
+</div>
+<div class="form-full">
+<label class="pass-label">Monthly Travel Frequency</label>
+<select id="frequency" class="pass-input" required>
+<option value="" disabled selected>Select frequency</option>
+<option value="2-3">2-3 trips per month</option>
+<option value="4+">4+ trips per month</option>
+</select>
+</div>
+<button type="submit" class="btn-pass-submit form-full">Request Boarding Pass</button>
+</form>
+<div id="confirmedContent" class="pass-confirmed">
+<h3 class="confirmed-msg">Added to waitlist.</h3>
+<p style="color: var(--text-secondary); margin-bottom: 2.5rem;">We've reserved your spot. Watch your inbox for your boarding invitation.</p>
+<div style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border);">
+<span class="pass-label">Confirmed Email</span>
+<span class="pass-value" id="displayEmail" style="font-size: 1rem;"></span>
+</div>
+</div>
+</div>
+<div class="pass-stub">
+<div class="stub-info">
+<span class="pass-label" id="seatLabel">Seat</span>
+<span class="pass-value" id="seatValue">BETA</span>
+</div>
+<div class="barcode"></div>
+<div class="stub-info">
+<span class="pass-label">Date</span>
+<span class="pass-value">Q1 2026</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="footer-left">
+<a href="#" class="logo">
+<svg class="logo-waves" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.974 35C5.361 35 0 29.639 0 23.026V11.974C0 5.361 5.361 0 11.974 0H23.026C29.639 0 35 5.361 35 11.974V23.026C35 29.639 29.639 35 23.026 35H11.974Z" fill="#D4AF37"/>
+<path d="M13.7021 15.125C16.7591 13.666 19.1901 11.156 20.5521 8.05396C19.6631 7.11996 18.5061 6.45296 17.2611 6.05296L16.5941 5.82996C16.5441 5.92696 16.5131 6.03296 16.5051 6.14096C15.4371 9.16696 13.2571 11.612 10.3231 12.991C8.27605 13.97 6.76405 15.749 6.05205 17.885L5.83105 18.551C5.92705 18.601 6.03305 18.631 6.14105 18.64C6.98705 18.951 7.83105 19.352 8.63205 19.842C9.78905 17.78 11.5621 16.13 13.7021 15.125ZM26.6031 15.304C24.9401 17.826 22.6161 19.841 19.8851 21.131C17.6181 22.199 15.8821 24.2 15.0821 26.602L14.8591 27.358C15.7231 28.124 16.7391 28.699 17.8401 29.048L18.5061 29.271C18.5571 29.174 18.5871 29.068 18.5961 28.959C19.6631 25.934 21.8431 23.488 24.7781 22.11C26.8241 21.131 28.3811 19.352 29.0491 17.216L29.2711 16.55C28.3371 16.283 27.4471 15.837 26.6031 15.304ZM13.0791 25.047C14.1871 22.37 16.2471 20.199 18.8621 18.952C21.2641 17.796 23.2651 16.018 24.6441 13.838C23.6211 12.859 22.7761 11.747 22.1541 10.413C20.4881 13.459 17.9041 15.903 14.7701 17.396C12.9461 18.241 11.4781 19.709 10.5881 21.488C11.5671 22.423 12.3681 23.579 12.9901 24.868L13.0791 25.047Z" fill="#080808"/>
+</svg>
+                June
+</a>
+<p class="footer-one-liner">Your AI executive assistant for business travel.</p>
+<p class="footer-entity">© 2026 Tidalpeak Labs Private Ltd.</p>
+</div>
+<div class="footer-right">
+<a href="#" class="footer-link">Privacy Policy</a>
+<a href="#" class="footer-link">Terms of Service</a>
+</div>
+</footer>
+<script>
+const form = document.getElementById('waitlistForm');
+const emailInput = document.getElementById('workEmail');
+const emailError = document.getElementById('emailError');
+const confirmedContent = document.getElementById('confirmedContent');
+const displayEmail = document.getElementById('displayEmail');
+const boardingPassCard = document.getElementById('boardingPassCard');
+const carrierLabel = document.getElementById('carrierLabel');
+const carrierValue = document.getElementById('carrierValue');
+const classLabel = document.getElementById('classLabel');
+const classValue = document.getElementById('classValue');
+const seatLabel = document.getElementById('seatLabel');
+const seatValue = document.getElementById('seatValue');
+const personalDomains = [
+'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com',
+'icloud.com', 'aol.com', 'me.com', 'mail.com', 'msn.com',
+'live.com', 'yandex.com', 'protonmail.com'
+];
+        form.onsubmit = (e) => {
+            e.preventDefault();
+const emailValueStr = emailInput.value.toLowerCase();
+const domain = emailValueStr.substring(emailValueStr.lastIndexOf("@") + 1);
+if (personalDomains.includes(domain)) {
+                emailError.style.display = 'block';
+                emailInput.style.borderBottomColor = '#ef4444';
+return false;
+}
+            form.style.display = 'none';
+            carrierLabel.innerText = "Status";
+            carrierValue.innerText = "WAITLISTED";
+            classLabel.innerText = "Group";
+            classValue.innerText = "PRIORITY 01";
+            seatLabel.innerText = "Position";
+            seatValue.innerText = "00" + (Math.floor(Math.random() * 89) + 10);
+            displayEmail.innerText = emailValueStr;
+            confirmedContent.style.display = 'block';
+};
+        emailInput.oninput = () => {
+            emailError.style.display = 'none';
+            emailInput.style.borderBottomColor = 'var(--border)';
+};
+</script>
+</body>
+</html>
