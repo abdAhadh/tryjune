@@ -93,7 +93,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 text-align: center;
-padding: 0 8%;
+padding: 100px 8% 0;
 background: radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.12), transparent 70%);
 }
 .badge {
@@ -504,6 +504,23 @@ font-size: 0.8rem;
 .footer-link:hover {
 color: var(--gold-primary);
 }
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .section-dashboard { padding: 6rem 5% 7rem; }
+            .dashboard-header { margin-bottom: 5rem; }
+            .dashboard-header h2 { font-size: 2.5rem; }
+            .bento-item { height: auto; padding: 2.5rem; }
+            .visual-container {
+                position: relative;
+                top: auto; left: auto; right: auto;
+                height: auto;
+                min-height: 180px;
+                margin-bottom: 2rem;
+            }
+            .bento-item h3 { font-size: 1.5rem; }
+            .bento-item p { font-size: 0.9rem; }
+        }
+        /* Mobile */
         @media (max-width: 850px) {
             /* Header */
             header { padding: 2rem 5% 1.5rem; }
@@ -514,17 +531,25 @@ color: var(--gold-primary);
             .hero .btn-glass { padding: 1.1rem 2.5rem !important; font-size: 0.85rem !important; }
             /* Dashboard / Bento */
             .section-dashboard { padding: 5rem 5% 6rem; }
-            .dashboard-header { margin-bottom: 4rem; }
+            .dashboard-header { margin-bottom: 3rem; }
             .dashboard-header h2 { font-size: 2rem; }
             .dashboard-header p { font-size: 1rem; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-item { height: auto; min-height: 400px; padding: 2.5rem; }
-            .visual-container { left: 2.5rem; right: 2.5rem; }
-            .bento-item h3 { font-size: 1.4rem; }
-            .bento-item p { font-size: 0.9rem; }
+            .bento-grid { grid-template-columns: 1fr; gap: 20px; }
+            .bento-item { height: auto; padding: 2rem; }
+            .visual-container {
+                position: relative;
+                top: auto; left: auto; right: auto;
+                height: auto;
+                min-height: 150px;
+                margin-bottom: 1.5rem;
+            }
+            .thought-engine { padding: 16px; }
+            .chat-line { font-size: 0.8rem; padding: 10px 16px; }
+            .bento-item h3 { font-size: 1.3rem; }
+            .bento-item p { font-size: 0.88rem; }
             /* Boarding Pass */
             .beta-section { padding: 6rem 5% 5rem; }
-            .invitation-header h2 { font-size: 2.5rem; }
+            .invitation-header h2 { font-size: 2rem; }
             .boarding-pass { flex-direction: column; }
             .boarding-pass::before, .boarding-pass::after { display: none; }
             .pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; padding: 2rem; }
@@ -534,6 +559,21 @@ color: var(--gold-primary);
             /* Footer */
             footer { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 5% 3rem; }
             .footer-right { justify-content: flex-start; }
+        }
+        /* Small mobile */
+        @media (max-width: 480px) {
+            header { padding: 1.5rem 4% 1rem; }
+            .logo { font-size: 1.25rem; }
+            .btn-glass { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 0.9rem; line-height: 1.7; }
+            .badge { font-size: 0.6rem; padding: 6px 14px; }
+            .bento-item { padding: 1.5rem; }
+            .visual-container { min-height: 130px; }
+            .pref-tags { max-width: 100%; }
+            .invitation-header h2 { font-size: 1.75rem; }
+            .pass-main { padding: 1.5rem; }
+            .pass-value { font-size: 1rem; }
         }
 /* Success state */
 .pass-confirmed {
