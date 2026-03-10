@@ -6,7 +6,7 @@
 <title>June | AI Executive Assistant for Business Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
 --bg-color: #080808;
@@ -18,9 +18,9 @@
 --text-secondary: #A1A1AA;
 --border: rgba(255, 255, 255, 0.06);
 --transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
-/* Typography */
 --font-heading: 'Outfit', sans-serif;
 --font-ui: 'Inter', sans-serif;
+--font-mono: 'JetBrains Mono', monospace;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -29,8 +29,10 @@ color: var(--text-main);
 font-family: var(--font-ui);
 line-height: 1.8;
 -webkit-font-smoothing: antialiased;
+overflow-x: hidden;
 }
-/* Top Brand Signature */
+
+/* ===== TOP LINE ===== */
 .top-line {
 height: 1px;
 width: 100%;
@@ -39,6 +41,8 @@ position: fixed;
 top: 0;
 z-index: 1000;
 }
+
+/* ===== HEADER ===== */
 header {
 padding: 3.5rem 8% 2rem;
 display: flex;
@@ -59,7 +63,7 @@ align-items: center;
 gap: 10px;
 letter-spacing: -0.02em;
 }
-.logo-waves { width: 28px; height: 28px; color: var(--gold-primary); }
+.logo-waves { width: 28px; height: 28px; }
 .btn-glass {
 font-family: var(--font-ui);
 background: rgba(255, 255, 255, 0.03);
@@ -78,14 +82,15 @@ line-height: 1;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+cursor: pointer;
 }
-/* Fixed invisible text on hover by ensuring black color wins over any potential inherited styles */
 .btn-glass:hover {
 background: var(--gold-primary) !important;
 color: #000 !important;
 border-color: var(--gold-primary) !important;
 }
-/* Hero */
+
+/* ===== HERO WITH PARTICLE CANVAS ===== */
 .hero {
 min-height: 100vh;
 display: flex;
@@ -94,7 +99,22 @@ justify-content: center;
 align-items: center;
 text-align: center;
 padding: 100px 8% 0;
-background: radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.12), transparent 70%);
+position: relative;
+overflow: hidden;
+}
+#heroCanvas {
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+z-index: 0;
+}
+.hero-content {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 .badge {
 font-family: var(--font-ui);
@@ -109,6 +129,9 @@ border-radius: 100px;
 margin-bottom: 2.5rem;
 background: rgba(212, 175, 55, 0.03);
 line-height: 1;
+opacity: 0;
+transform: translateY(20px);
+animation: heroReveal 0.8s 0.2s forwards;
 }
 .hero h1 {
 font-family: var(--font-heading);
@@ -117,6 +140,9 @@ font-weight: 500;
 letter-spacing: -0.04em;
 line-height: 1.1;
 margin-bottom: 2.5rem;
+opacity: 0;
+transform: translateY(30px);
+animation: heroReveal 0.8s 0.4s forwards;
 }
 .hero h1 span {
 display: block;
@@ -132,10 +158,32 @@ color: var(--text-secondary);
 max-width: 720px;
 margin-bottom: 4rem;
 font-weight: 300;
-opacity: 0.8;
+opacity: 0;
 line-height: 1.8;
+transform: translateY(30px);
+animation: heroReveal 0.8s 0.6s forwards;
 }
-/* Dashboard Section */
+.hero .btn-glass {
+opacity: 0;
+transform: translateY(30px);
+animation: heroReveal 0.8s 0.8s forwards;
+}
+@keyframes heroReveal {
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+opacity: 0;
+transform: translateY(40px);
+transition: opacity 0.8s cubic-bezier(0.2, 0, 0, 1), transform 0.8s cubic-bezier(0.2, 0, 0, 1);
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* ===== DASHBOARD SECTION ===== */
 .section-dashboard {
 padding: 10rem 8% 12rem;
 max-width: 1300px;
@@ -170,14 +218,13 @@ gap: 24px;
 background: var(--card-bg);
 border: 1px solid var(--border);
 border-radius: 24px;
-padding: 4rem;
+padding: 0;
 position: relative;
 overflow: hidden;
 transition: var(--transition);
 display: flex;
 flex-direction: column;
-justify-content: flex-end;
-height: 540px;
+height: 580px;
 }
 .bento-item:hover {
 border-color: rgba(212, 175, 55, 0.4);
@@ -185,109 +232,18 @@ background: #151515;
 transform: translateY(-5px);
 }
 .visual-container {
-position: absolute;
-top: 2.5rem;
-left: 4rem;
-right: 4rem;
-height: 240px;
+padding: 2.5rem 2.5rem 0;
+flex: 1;
+min-height: 0;
 display: flex;
-align-items: center;
+align-items: flex-start;
 justify-content: center;
+overflow: hidden;
 }
-/* AI Thought Engine Animation */
-.thought-engine {
-width: 100%;
-display: flex;
-flex-direction: column;
-gap: 10px;
-padding: 20px;
-background: rgba(255,255,255,0.02);
-border-radius: 16px;
-border: 1px solid var(--border);
+.bento-text {
+padding: 2rem 2.5rem 2.5rem;
 }
-.thought-line {
-display: flex;
-align-items: center;
-gap: 12px;
-font-size: 0.8rem;
-color: var(--text-secondary);
-opacity: 0;
-transform: translateX(-10px);
-animation: stepIn 6s infinite;
-}
-.step-dot {
-width: 6px;
-height: 6px;
-background: var(--gold-primary);
-border-radius: 50%;
-box-shadow: 0 0 10px var(--gold-primary);
-}
-.thought-line:nth-child(2) { animation-delay: 1.5s; }
-.thought-line:nth-child(3) { animation-delay: 3s; }
-.thought-result {
-margin-top: 10px;
-padding-top: 10px;
-border-top: 1px solid var(--border);
-color: var(--gold-primary);
-font-weight: 500;
-opacity: 0;
-animation: resultFade 6s infinite;
-animation-delay: 4.5s;
-display: flex;
-justify-content: space-between;
-}
-@keyframes stepIn {
-0%, 5% { opacity: 0; transform: translateX(-10px); }
-10%, 90% { opacity: 1; transform: translateX(0); }
-95%, 100% { opacity: 0; }
-}
-@keyframes resultFade {
-0% { opacity: 0; }
-10%, 90% { opacity: 1; }
-100% { opacity: 0; }
-}
-.chat-line {
-font-family: var(--font-ui);
-background: rgba(255,255,255,0.03);
-border: 1px solid var(--border);
-padding: 12px 20px;
-border-radius: 14px;
-font-size: 0.85rem;
-margin-bottom: 12px;
-width: fit-content;
-max-width: 100%;
-transform: translateY(20px);
-opacity: 0;
-animation: chatFade 3.5s infinite;
-}
-@keyframes chatFade {
-0%, 5% { opacity: 0; transform: translateY(10px); }
-10%, 85% { opacity: 1; transform: translateY(0); }
-95%, 100% { opacity: 0; transform: translateY(-5px); }
-}
-.pref-tags {
-display: flex;
-flex-wrap: wrap;
-gap: 12px;
-justify-content: center;
-max-width: 300px;
-}
-.tag {
-background: rgba(255,255,255,0.03);
-border: 1px solid var(--border);
-padding: 8px 16px;
-border-radius: 100px;
-font-size: 0.8rem;
-color: var(--text-secondary);
-animation: tagPulse 4s infinite;
-}
-@keyframes tagPulse {
-0%, 100% { border-color: var(--border); color: var(--text-secondary); background: transparent; }
-33% { border-color: var(--gold-primary); color: var(--gold-primary); background: var(--gold-muted); }
-}
-.tag:nth-child(2) { animation-delay: 1.3s; }
-.tag:nth-child(3) { animation-delay: 2.6s; }
-.bento-item h3 {
+.bento-text h3 {
 font-family: var(--font-heading);
 font-size: 1.75rem;
 font-weight: 500;
@@ -295,7 +251,7 @@ margin-bottom: 1rem;
 letter-spacing: -0.02em;
 line-height: 1.2;
 }
-.bento-item p {
+.bento-text p {
 font-family: var(--font-ui);
 color: var(--text-secondary);
 font-size: 0.95rem;
@@ -303,7 +259,462 @@ line-height: 1.8;
 max-width: 440px;
 font-weight: 300;
 }
-/* --- Boarding Pass Section --- */
+
+/* ===== CARD 1: REALISTIC CHAT UI ===== */
+.chat-mockup {
+width: 100%;
+background: rgba(0,0,0,0.3);
+border-radius: 16px;
+border: 1px solid var(--border);
+overflow: hidden;
+display: flex;
+flex-direction: column;
+max-height: 100%;
+}
+.chat-titlebar {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 12px 16px;
+border-bottom: 1px solid var(--border);
+background: rgba(255,255,255,0.02);
+}
+.chat-avatar {
+width: 24px; height: 24px;
+border-radius: 50%;
+background: var(--gold-primary);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 11px;
+font-weight: 600;
+color: #000;
+}
+.chat-titlebar-name {
+font-size: 0.75rem;
+font-weight: 500;
+}
+.chat-titlebar-status {
+font-size: 0.6rem;
+color: #22c55e;
+margin-left: auto;
+display: flex;
+align-items: center;
+gap: 4px;
+}
+.chat-titlebar-status::before {
+content: '';
+width: 5px; height: 5px;
+background: #22c55e;
+border-radius: 50%;
+}
+.chat-body {
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+flex: 1;
+min-height: 0;
+overflow-y: auto;
+}
+.msg {
+max-width: 85%;
+padding: 10px 14px;
+border-radius: 14px;
+font-size: 0.78rem;
+line-height: 1.5;
+opacity: 0;
+transform: translateY(8px);
+transition: opacity 0.4s, transform 0.4s;
+}
+.msg.visible { opacity: 1; transform: translateY(0); }
+.msg-user {
+background: rgba(255,255,255,0.08);
+align-self: flex-end;
+border-bottom-right-radius: 4px;
+}
+.msg-june {
+background: rgba(212, 175, 55, 0.12);
+border: 1px solid rgba(212, 175, 55, 0.2);
+align-self: flex-start;
+border-bottom-left-radius: 4px;
+color: var(--gold-primary);
+}
+.msg-time {
+font-size: 0.6rem;
+color: var(--text-secondary);
+opacity: 0.5;
+margin-top: 2px;
+}
+.typing-indicator {
+display: flex;
+gap: 4px;
+align-items: center;
+padding: 10px 14px;
+background: rgba(212, 175, 55, 0.08);
+border-radius: 14px;
+border-bottom-left-radius: 4px;
+align-self: flex-start;
+width: fit-content;
+opacity: 0;
+transition: opacity 0.3s;
+}
+.typing-indicator.visible { opacity: 1; }
+.typing-dot {
+width: 6px; height: 6px;
+background: var(--gold-primary);
+border-radius: 50%;
+animation: typingBounce 1.4s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ===== CARD 2: PREFERENCE PROFILE ===== */
+.pref-profile {
+width: 100%;
+background: rgba(0,0,0,0.3);
+border-radius: 16px;
+border: 1px solid var(--border);
+padding: 20px;
+max-height: 100%;
+overflow-y: auto;
+}
+.pref-header {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 20px;
+padding-bottom: 14px;
+border-bottom: 1px solid var(--border);
+}
+.pref-avatar {
+width: 36px; height: 36px;
+border-radius: 10px;
+background: linear-gradient(135deg, var(--gold-primary), var(--gold-soft));
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+color: #000;
+font-size: 14px;
+}
+.pref-header-text { flex: 1; }
+.pref-header-name { font-size: 0.8rem; font-weight: 500; }
+.pref-header-sub { font-size: 0.65rem; color: var(--text-secondary); }
+.pref-ring {
+width: 36px; height: 36px;
+position: relative;
+}
+.pref-ring svg { transform: rotate(-90deg); }
+.pref-ring-text {
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.55rem;
+font-weight: 600;
+color: var(--gold-primary);
+}
+.pref-rows { display: flex; flex-direction: column; gap: 14px; }
+.pref-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.pref-row-label {
+font-size: 0.72rem;
+color: var(--text-secondary);
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.pref-row-label .icon {
+font-size: 0.8rem;
+}
+.pref-toggle {
+width: 36px; height: 20px;
+border-radius: 10px;
+background: rgba(255,255,255,0.1);
+position: relative;
+cursor: pointer;
+transition: background 0.3s;
+}
+.pref-toggle.on { background: var(--gold-primary); }
+.pref-toggle-knob {
+width: 16px; height: 16px;
+border-radius: 50%;
+background: #fff;
+position: absolute;
+top: 2px;
+left: 2px;
+transition: transform 0.3s;
+}
+.pref-toggle.on .pref-toggle-knob { transform: translateX(16px); }
+.pref-slider-wrap { display: flex; align-items: center; gap: 8px; }
+.pref-slider {
+width: 80px; height: 4px;
+background: rgba(255,255,255,0.1);
+border-radius: 2px;
+position: relative;
+overflow: hidden;
+}
+.pref-slider-fill {
+height: 100%;
+background: var(--gold-primary);
+border-radius: 2px;
+transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+.pref-slider-val {
+font-size: 0.65rem;
+color: var(--gold-primary);
+font-weight: 500;
+font-family: var(--font-mono);
+min-width: 18px;
+text-align: right;
+}
+
+/* ===== CARD 3: PRICE COMPARISON ===== */
+.deal-mockup {
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 10px;
+max-height: 100%;
+overflow-y: auto;
+}
+.deal-card {
+background: rgba(0,0,0,0.3);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 14px 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+transition: border-color 0.5s;
+}
+.deal-card.best { border-color: rgba(212, 175, 55, 0.4); }
+.deal-icon {
+width: 32px; height: 32px;
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.75rem;
+font-weight: 600;
+flex-shrink: 0;
+}
+.deal-icon.flight { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.deal-icon.hotel { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.deal-info { flex: 1; }
+.deal-route {
+font-size: 0.72rem;
+font-weight: 500;
+display: flex;
+align-items: center;
+gap: 4px;
+}
+.deal-detail {
+font-size: 0.62rem;
+color: var(--text-secondary);
+margin-top: 2px;
+}
+.deal-prices { text-align: right; }
+.deal-old {
+font-size: 0.65rem;
+color: var(--text-secondary);
+text-decoration: line-through;
+opacity: 0;
+transition: opacity 0.4s;
+}
+.deal-old.visible { opacity: 1; }
+.deal-new {
+font-size: 0.85rem;
+font-weight: 600;
+color: var(--gold-primary);
+font-family: var(--font-mono);
+}
+.deal-savings-bar {
+background: rgba(34, 197, 94, 0.08);
+border: 1px solid rgba(34, 197, 94, 0.2);
+border-radius: 10px;
+padding: 10px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+opacity: 0;
+transform: translateY(8px);
+transition: opacity 0.5s, transform 0.5s;
+}
+.deal-savings-bar.visible { opacity: 1; transform: translateY(0); }
+.deal-savings-label {
+font-size: 0.7rem;
+color: #22c55e;
+font-weight: 500;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.deal-savings-amount {
+font-size: 1rem;
+font-weight: 700;
+color: #22c55e;
+font-family: var(--font-mono);
+}
+.deal-rewards {
+display: flex;
+gap: 6px;
+margin-top: 2px;
+}
+.reward-badge {
+font-size: 0.55rem;
+padding: 2px 7px;
+border-radius: 4px;
+background: rgba(212, 175, 55, 0.1);
+color: var(--gold-primary);
+border: 1px solid rgba(212, 175, 55, 0.2);
+font-weight: 500;
+opacity: 0;
+transition: opacity 0.3s;
+}
+.reward-badge.visible { opacity: 1; }
+
+/* ===== CARD 4: FLIGHT STATUS BOARD ===== */
+.status-board {
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 10px;
+max-height: 100%;
+overflow-y: auto;
+}
+.status-card {
+background: rgba(0,0,0,0.3);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 14px 16px;
+transition: border-color 0.5s;
+}
+.status-card-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+.status-flight {
+font-size: 0.75rem;
+font-weight: 600;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.status-badge {
+font-size: 0.6rem;
+padding: 3px 8px;
+border-radius: 6px;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+transition: all 0.5s;
+}
+.status-badge.delayed { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.status-badge.rebooked { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+.status-route {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 12px;
+}
+.status-airport {
+font-family: var(--font-mono);
+font-size: 1.1rem;
+font-weight: 600;
+}
+.status-line {
+flex: 1;
+height: 1px;
+background: var(--border);
+position: relative;
+}
+.status-plane {
+position: absolute;
+top: -6px;
+font-size: 0.75rem;
+transition: left 2s cubic-bezier(0.2, 0, 0, 1);
+left: 20%;
+}
+.status-times {
+display: flex;
+justify-content: space-between;
+font-size: 0.65rem;
+color: var(--text-secondary);
+}
+.status-timeline {
+display: flex;
+flex-direction: column;
+gap: 0;
+}
+.timeline-step {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+padding: 8px 0;
+opacity: 0;
+transform: translateX(-10px);
+transition: opacity 0.4s, transform 0.4s;
+}
+.timeline-step.visible { opacity: 1; transform: translateX(0); }
+.timeline-dot-wrap {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0;
+}
+.timeline-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(--border);
+transition: background 0.5s, box-shadow 0.5s;
+flex-shrink: 0;
+position: relative;
+z-index: 1;
+}
+.timeline-dot.active { background: var(--gold-primary); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+.timeline-dot.error { background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+.timeline-dot.success { background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+.timeline-connector {
+width: 1px; height: 20px;
+background: var(--border);
+}
+.timeline-text {
+font-size: 0.7rem;
+color: var(--text-secondary);
+padding-top: 1px;
+}
+.timeline-text strong { color: var(--text-main); font-weight: 500; }
+.toast-notification {
+background: rgba(34, 197, 94, 0.1);
+border: 1px solid rgba(34, 197, 94, 0.25);
+border-radius: 10px;
+padding: 10px 14px;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 0.72rem;
+color: #22c55e;
+font-weight: 500;
+opacity: 0;
+transform: translateY(8px);
+transition: opacity 0.5s, transform 0.5s;
+}
+.toast-notification.visible { opacity: 1; transform: translateY(0); }
+.toast-icon { font-size: 1rem; }
+
+/* ===== BOARDING PASS ===== */
 .beta-section {
 padding: 12rem 8% 10rem;
 background: #000;
@@ -315,7 +726,6 @@ border-top: 1px solid var(--border);
 .invitation-header {
 text-align: center;
 margin-bottom: 4rem;
-transition: var(--transition);
 }
 .invitation-header h2 {
 font-family: var(--font-heading);
@@ -330,9 +740,13 @@ max-width: 500px;
 margin: 0 auto;
 line-height: 1.6;
 }
-.boarding-pass {
+.boarding-pass-wrap {
+perspective: 1000px;
 width: 100%;
 max-width: 800px;
+}
+.boarding-pass {
+width: 100%;
 background: #111;
 border: 1px solid var(--border);
 border-radius: 24px;
@@ -340,7 +754,7 @@ display: flex;
 overflow: hidden;
 position: relative;
 box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-transition: var(--transition);
+transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .boarding-pass::before,
 .boarding-pass::after {
@@ -357,6 +771,20 @@ border: 1px solid var(--border);
 }
 .boarding-pass::before { top: -20px; }
 .boarding-pass::after { bottom: -20px; }
+/* Holographic shimmer overlay */
+.boarding-pass .shimmer {
+position: absolute;
+top: 0; left: -100%;
+width: 50%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(212,175,55,0.06), transparent);
+z-index: 10;
+pointer-events: none;
+animation: shimmerSlide 4s infinite;
+}
+@keyframes shimmerSlide {
+0% { left: -50%; }
+100% { left: 150%; }
+}
 .pass-main {
 flex: 0 0 70%;
 padding: 3rem;
@@ -460,7 +888,23 @@ opacity: 0.4;
 text-align: center;
 font-family: var(--font-heading);
 }
-/* --- Footer Styles --- */
+.pass-confirmed {
+display: none;
+animation: fadeIn 0.8s forwards;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.confirmed-msg {
+font-family: var(--font-heading);
+font-size: 2rem;
+color: var(--gold-primary);
+margin-bottom: 1rem;
+line-height: 1.1;
+}
+
+/* ===== FOOTER ===== */
 footer {
 padding: 8rem 8% 4rem;
 display: grid;
@@ -504,179 +948,289 @@ font-size: 0.8rem;
 .footer-link:hover {
 color: var(--gold-primary);
 }
-        /* Tablet */
-        @media (max-width: 1024px) {
-            .section-dashboard { padding: 6rem 5% 7rem; }
-            .dashboard-header { margin-bottom: 5rem; }
-            .dashboard-header h2 { font-size: 2.5rem; }
-            .bento-item { height: auto; padding: 2.5rem; }
-            .visual-container {
-                position: relative;
-                top: auto; left: auto; right: auto;
-                height: auto;
-                min-height: 180px;
-                margin-bottom: 2rem;
-            }
-            .bento-item h3 { font-size: 1.5rem; }
-            .bento-item p { font-size: 0.9rem; }
-        }
-        /* Mobile */
-        @media (max-width: 850px) {
-            /* Header */
-            header { padding: 2rem 5% 1.5rem; }
-            /* Hero */
-            .hero { padding: 0 5%; }
-            .hero h1 span { white-space: normal; }
-            .hero p { font-size: 1rem; margin-bottom: 2.5rem; }
-            .hero .btn-glass { padding: 1.1rem 2.5rem !important; font-size: 0.85rem !important; }
-            /* Dashboard / Bento */
-            .section-dashboard { padding: 5rem 5% 6rem; }
-            .dashboard-header { margin-bottom: 3rem; }
-            .dashboard-header h2 { font-size: 2rem; }
-            .dashboard-header p { font-size: 1rem; }
-            .bento-grid { grid-template-columns: 1fr; gap: 20px; }
-            .bento-item { height: auto; padding: 2rem; }
-            .visual-container {
-                position: relative;
-                top: auto; left: auto; right: auto;
-                height: auto;
-                min-height: 150px;
-                margin-bottom: 1.5rem;
-            }
-            .thought-engine { padding: 16px; }
-            .chat-line { font-size: 0.8rem; padding: 10px 16px; }
-            .bento-item h3 { font-size: 1.3rem; }
-            .bento-item p { font-size: 0.88rem; }
-            /* Boarding Pass */
-            .beta-section { padding: 6rem 5% 5rem; }
-            .invitation-header h2 { font-size: 2rem; }
-            .boarding-pass { flex-direction: column; }
-            .boarding-pass::before, .boarding-pass::after { display: none; }
-            .pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; padding: 2rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-full { grid-column: span 1; }
-            .pass-stub { padding: 2rem 1.5rem; }
-            /* Footer */
-            footer { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 5% 3rem; }
-            .footer-right { justify-content: flex-start; }
-        }
-        /* Small mobile */
-        @media (max-width: 480px) {
-            header { padding: 1.5rem 4% 1rem; }
-            .logo { font-size: 1.25rem; }
-            .btn-glass { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 0.9rem; line-height: 1.7; }
-            .badge { font-size: 0.6rem; padding: 6px 14px; }
-            .bento-item { padding: 1.5rem; }
-            .visual-container { min-height: 130px; }
-            .pref-tags { max-width: 100%; }
-            .invitation-header h2 { font-size: 1.75rem; }
-            .pass-main { padding: 1.5rem; }
-            .pass-value { font-size: 1rem; }
-        }
-/* Success state */
-.pass-confirmed {
-display: none;
-animation: fadeIn 0.8s forwards;
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .section-dashboard { padding: 6rem 5% 7rem; }
+    .dashboard-header { margin-bottom: 5rem; }
+    .dashboard-header h2 { font-size: 2.5rem; }
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-item { height: 540px; }
+    .bento-text h3 { font-size: 1.5rem; }
+    .bento-text p { font-size: 0.9rem; }
 }
-@keyframes fadeIn {
-from { opacity: 0; transform: translateY(10px); }
-to { opacity: 1; transform: translateY(0); }
+@media (max-width: 850px) {
+    header { padding: 2rem 5% 1.5rem; }
+    .hero { padding: 100px 5% 0; }
+    .hero h1 span { white-space: normal; }
+    .hero p { font-size: 1rem; margin-bottom: 2.5rem; }
+    .section-dashboard { padding: 5rem 5% 6rem; }
+    .dashboard-header { margin-bottom: 3rem; }
+    .dashboard-header h2 { font-size: 2rem; }
+    .dashboard-header p { font-size: 1rem; }
+    .bento-grid { gap: 20px; }
+    .bento-item { height: 520px; }
+    .visual-container { padding: 2rem 2rem 0; }
+    .bento-text { padding: 1.5rem 2rem 2rem; }
+    .bento-text h3 { font-size: 1.3rem; }
+    .bento-text p { font-size: 0.88rem; }
+    .beta-section { padding: 6rem 5% 5rem; }
+    .invitation-header h2 { font-size: 2rem; }
+    .boarding-pass { flex-direction: column; }
+    .boarding-pass::before, .boarding-pass::after { display: none; }
+    .pass-main { border-right: none; border-bottom: 1px dashed var(--border); flex: 1; padding: 2rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-full { grid-column: span 1; }
+    .pass-stub { padding: 2rem 1.5rem; }
+    footer { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 5% 3rem; }
+    .footer-right { justify-content: flex-start; }
 }
-.confirmed-msg {
-font-family: var(--font-heading);
-font-size: 2rem;
-color: var(--gold-primary);
-margin-bottom: 1rem;
-line-height: 1.1;
+@media (max-width: 480px) {
+    header { padding: 1.5rem 4% 1rem; }
+    .logo { font-size: 1.25rem; }
+    .btn-glass { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 0.9rem; line-height: 1.7; }
+    .badge { font-size: 0.6rem; padding: 6px 14px; }
+    .bento-item { height: 480px; }
+    .visual-container { padding: 1.5rem 1.5rem 0; }
+    .bento-text { padding: 1.25rem 1.5rem 1.5rem; }
+    .pref-slider { width: 60px; }
+    .invitation-header h2 { font-size: 1.75rem; }
+    .pass-main { padding: 1.5rem; }
+    .pass-value { font-size: 1rem; }
 }
 </style>
 </head>
 <body>
 <div class="top-line"></div>
+
 <header>
 <a href="#" class="logo">
 <svg class="logo-waves" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.974 35C5.361 35 0 29.639 0 23.026V11.974C0 5.361 5.361 0 11.974 0H23.026C29.639 0 35 5.361 35 11.974V23.026C35 29.639 29.639 35 23.026 35H11.974Z" fill="#D4AF37"/>
 <path d="M13.7021 15.125C16.7591 13.666 19.1901 11.156 20.5521 8.05396C19.6631 7.11996 18.5061 6.45296 17.2611 6.05296L16.5941 5.82996C16.5441 5.92696 16.5131 6.03296 16.5051 6.14096C15.4371 9.16696 13.2571 11.612 10.3231 12.991C8.27605 13.97 6.76405 15.749 6.05205 17.885L5.83105 18.551C5.92705 18.601 6.03305 18.631 6.14105 18.64C6.98705 18.951 7.83105 19.352 8.63205 19.842C9.78905 17.78 11.5621 16.13 13.7021 15.125ZM26.6031 15.304C24.9401 17.826 22.6161 19.841 19.8851 21.131C17.6181 22.199 15.8821 24.2 15.0821 26.602L14.8591 27.358C15.7231 28.124 16.7391 28.699 17.8401 29.048L18.5061 29.271C18.5571 29.174 18.5871 29.068 18.5961 28.959C19.6631 25.934 21.8431 23.488 24.7781 22.11C26.8241 21.131 28.3811 19.352 29.0491 17.216L29.2711 16.55C28.3371 16.283 27.4471 15.837 26.6031 15.304ZM13.0791 25.047C14.1871 22.37 16.2471 20.199 18.8621 18.952C21.2641 17.796 23.2651 16.018 24.6441 13.838C23.6211 12.859 22.7761 11.747 22.1541 10.413C20.4881 13.459 17.9041 15.903 14.7701 17.396C12.9461 18.241 11.4781 19.709 10.5881 21.488C11.5671 22.423 12.3681 23.579 12.9901 24.868L13.0791 25.047Z" fill="#080808"/>
 </svg>
-            June
+June
 </a>
 <a href="#beta" class="btn-glass">Join Waitlist</a>
 </header>
+
 <main>
+<!-- ===== HERO ===== -->
 <section class="hero">
+<canvas id="heroCanvas"></canvas>
+<div class="hero-content">
 <div class="badge">Limited Q1 2026 Beta</div>
 <h1>Meet June.<span>Your travel assistant for work</span></h1>
 <p>June lives inside ChatGPT and Claude.<br>Just chat about your work trip, and she'll help you plan it, book it, and handle any changes pro-actively.</p>
-<!-- Removed specific inline color to prevent hover invisibility bug -->
 <a href="#beta" class="btn-glass" style="padding: 1.4rem 3.5rem; font-size: 0.95rem; border-color: var(--gold-primary);">Join Waitlist</a>
+</div>
 </section>
+
+<!-- ===== FEATURES ===== -->
 <section class="section-dashboard">
-<div class="dashboard-header">
+<div class="dashboard-header reveal">
 <h2>June takes the work out of work travel.</h2>
 <p>For busy professionals and SMBs who need a travel EA, without the full-time cost.</p>
 </div>
 <div class="bento-grid">
-<div class="bento-item">
-<div class="visual-container" style="flex-direction: column; align-items: flex-start;">
-<div class="chat-line" style="animation-delay: 0s;">"I'm heading to London next Tuesday."</div>
-<div class="chat-line" style="animation-delay: 0.4s; background: var(--gold-muted); border-color: var(--gold-primary); color: var(--gold-primary); border: 1px solid var(--gold-primary);">"Searching flights with SkyPriority & Virgin Lounge access..."</div>
+
+<!-- CARD 1: Chat UI -->
+<div class="bento-item reveal" id="chatCard">
+<div class="visual-container" style="align-items: flex-start;">
+<div class="chat-mockup">
+<div class="chat-titlebar">
+<div class="chat-avatar">J</div>
+<span class="chat-titlebar-name">June</span>
+<span class="chat-titlebar-status">Online</span>
 </div>
+<div class="chat-body" id="chatBody">
+<div class="typing-indicator" id="typingIndicator">
+<span class="typing-dot"></span>
+<span class="typing-dot"></span>
+<span class="typing-dot"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="bento-text">
 <h3>Plan trip in a single chat</h3>
 <p>Tell June where you need to be. She'll help you pick the right flight, find a hotel near your venue, and arrange a cab at the airport.</p>
 </div>
-<div class="bento-item">
-<div class="visual-container">
-<div class="pref-tags">
-<div class="tag">Window Seat</div>
-<div class="tag">Marriott Preferred</div>
-<div class="tag">Direct Flights Only</div>
+</div>
+
+<!-- CARD 2: Preference Profile -->
+<div class="bento-item reveal" id="prefCard">
+<div class="visual-container" style="align-items: flex-start;">
+<div class="pref-profile">
+<div class="pref-header">
+<div class="pref-avatar">AK</div>
+<div class="pref-header-text">
+<div class="pref-header-name">Alex Kim</div>
+<div class="pref-header-sub">12 trips learned</div>
+</div>
+<div class="pref-ring">
+<svg width="36" height="36" viewBox="0 0 36 36">
+<circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+<circle id="prefRingCircle" cx="18" cy="18" r="15" fill="none" stroke="#D4AF37" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round" style="transition: stroke-dashoffset 1.5s cubic-bezier(0.2,0,0,1);"/>
+</svg>
+<div class="pref-ring-text" id="prefRingText">0%</div>
 </div>
 </div>
+<div class="pref-rows">
+<div class="pref-row">
+<span class="pref-row-label"><span class="icon">&#9992;</span> Direct flights only</span>
+<div class="pref-toggle" id="toggle1"><div class="pref-toggle-knob"></div></div>
+</div>
+<div class="pref-row">
+<span class="pref-row-label"><span class="icon">&#127962;</span> Marriott preferred</span>
+<div class="pref-toggle" id="toggle2"><div class="pref-toggle-knob"></div></div>
+</div>
+<div class="pref-row">
+<span class="pref-row-label"><span class="icon">&#128186;</span> Window seat</span>
+<div class="pref-toggle" id="toggle3"><div class="pref-toggle-knob"></div></div>
+</div>
+<div class="pref-row">
+<span class="pref-row-label"><span class="icon">&#128176;</span> Max budget</span>
+<div class="pref-slider-wrap">
+<div class="pref-slider"><div class="pref-slider-fill" id="budgetFill" style="width: 0%"></div></div>
+<span class="pref-slider-val" id="budgetVal">$0</span>
+</div>
+</div>
+<div class="pref-row">
+<span class="pref-row-label"><span class="icon">&#9201;</span> Lounge access</span>
+<div class="pref-slider-wrap">
+<div class="pref-slider"><div class="pref-slider-fill" id="loungeFill" style="width: 0%"></div></div>
+<span class="pref-slider-val" id="loungeVal">Off</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bento-text">
 <h3>Learns your preferences</h3>
 <p>Window seat, not middle. Marriott, not Hilton. Direct flights when possible. June learns your preferences as you book.</p>
 </div>
-<div class="bento-item">
-<div class="visual-container">
-<div class="thought-engine">
-<div class="thought-line"><span class="step-dot"></span> Scanning Marriott rates...</div>
-<div class="thought-line"><span class="step-dot"></span> Checking Delta miles...</div>
-<div class="thought-line"><span class="step-dot"></span> Applying Sapphire rewards...</div>
-<div class="thought-result">
-<span>Savings secured</span>
-<span>-$260</span>
+</div>
+
+<!-- CARD 3: Best Deal -->
+<div class="bento-item reveal" id="dealCard">
+<div class="visual-container" style="align-items: flex-start;">
+<div class="deal-mockup">
+<div class="deal-card" id="dealFlight">
+<div class="deal-icon flight">&#9992;</div>
+<div class="deal-info">
+<div class="deal-route">JFK <span style="color:var(--text-secondary);font-size:0.6rem;">&#10230;</span> LHR</div>
+<div class="deal-detail">Delta DL401 &middot; Direct &middot; 7h 15m</div>
+<div class="deal-rewards" id="flightRewards">
+<span class="reward-badge">SkyMiles</span>
+<span class="reward-badge">Amex 3x</span>
+</div>
+</div>
+<div class="deal-prices">
+<div class="deal-old" id="flightOld">$1,240</div>
+<div class="deal-new" id="flightNew">$1,240</div>
+</div>
+</div>
+<div class="deal-card" id="dealHotel">
+<div class="deal-icon hotel">&#127968;</div>
+<div class="deal-info">
+<div class="deal-route">Marriott Canary Wharf</div>
+<div class="deal-detail">3 nights &middot; King Suite &middot; Breakfast</div>
+<div class="deal-rewards" id="hotelRewards">
+<span class="reward-badge">Bonvoy Gold</span>
+<span class="reward-badge">Sapphire 5x</span>
+</div>
+</div>
+<div class="deal-prices">
+<div class="deal-old" id="hotelOld">$890</div>
+<div class="deal-new" id="hotelNew">$890</div>
+</div>
+</div>
+<div class="deal-savings-bar" id="savingsBar">
+<span class="deal-savings-label">&#10003; Total savings secured</span>
+<span class="deal-savings-amount" id="savingsAmount">-$0</span>
 </div>
 </div>
 </div>
+<div class="bento-text">
 <h3>Gets you the best deal</h3>
-<p>June maximizes your airline miles, hotel points, and credit card rewards. If prices drop after booking, she rebooks automatically and refunds the difference.</p>
-</div>
-<div class="bento-item">
-<div class="visual-container">
-<div class="thought-engine">
-<div class="thought-line"><span class="step-dot" style="background: #ef4444; box-shadow: 0 0 10px #ef4444;"></span> Flight UA142: 3h delay detected</div>
-<div class="thought-line"><span class="step-dot"></span> Sourcing alternative connections...</div>
-<div class="thought-line"><span class="step-dot"></span> Updating calendar & clients...</div>
-<div class="thought-result">
-<span>Auto-rebooked</span>
-<span style="color: #22c55e;">Resolved</span>
+<p>June maximizes your airline miles, hotel points, and credit card rewards. If prices drop after booking, she rebooks automatically.</p>
 </div>
 </div>
+
+<!-- CARD 4: Issues Board -->
+<div class="bento-item reveal" id="statusCard">
+<div class="visual-container" style="align-items: flex-start;">
+<div class="status-board">
+<div class="status-card">
+<div class="status-card-header">
+<span class="status-flight">&#9992; UA 142</span>
+<span class="status-badge delayed" id="statusBadge">Delayed</span>
 </div>
+<div class="status-route">
+<span class="status-airport">SFO</span>
+<div class="status-line"><span class="status-plane" id="statusPlane">&#9992;&#65039;</span></div>
+<span class="status-airport">ORD</span>
+</div>
+<div class="status-times">
+<span>Dep <span id="depTime">08:45</span></span>
+<span>Arr <span id="arrTime">14:20</span></span>
+</div>
+</div>
+<div class="status-timeline" id="statusTimeline">
+<div class="timeline-step">
+<div class="timeline-dot-wrap">
+<div class="timeline-dot error"></div>
+<div class="timeline-connector"></div>
+</div>
+<div class="timeline-text"><strong>3h delay detected</strong> on UA 142</div>
+</div>
+<div class="timeline-step">
+<div class="timeline-dot-wrap">
+<div class="timeline-dot"></div>
+<div class="timeline-connector"></div>
+</div>
+<div class="timeline-text">Scanning 14 alternative routes...</div>
+</div>
+<div class="timeline-step">
+<div class="timeline-dot-wrap">
+<div class="timeline-dot"></div>
+<div class="timeline-connector"></div>
+</div>
+<div class="timeline-text">Rebooked on <strong>AA 1092</strong> &middot; Dep 09:15</div>
+</div>
+<div class="timeline-step">
+<div class="timeline-dot-wrap">
+<div class="timeline-dot"></div>
+</div>
+<div class="timeline-text">Calendar & clients updated</div>
+</div>
+</div>
+<div class="toast-notification" id="statusToast">
+<span class="toast-icon">&#10003;</span>
+Disruption resolved &mdash; you arrive 2h earlier
+</div>
+</div>
+</div>
+<div class="bento-text">
 <h3>Proactively fixes issues</h3>
 <p>June monitors every trip. When disruptions happen, she can suggest alternatives and re-book them proactively.</p>
 </div>
 </div>
+</div>
 </section>
-<!-- Boarding Pass / Waitlist -->
+
+<!-- ===== BOARDING PASS ===== -->
 <section id="beta" class="beta-section">
-<div class="invitation-header">
+<div class="invitation-header reveal">
 <h2>Be among the first</h2>
 <p>Limited spots for frequent business travelers.<br>Request early access.</p>
 </div>
+<div class="boarding-pass-wrap reveal">
 <div id="boardingPassCard" class="boarding-pass">
+<div class="shimmer"></div>
 <div class="pass-main">
 <div class="pass-header">
 <div>
@@ -725,8 +1279,10 @@ line-height: 1.1;
 </div>
 </div>
 </div>
+</div>
 </section>
 </main>
+
 <footer>
 <div class="footer-left">
 <a href="#" class="logo">
@@ -734,23 +1290,319 @@ line-height: 1.1;
 <path d="M11.974 35C5.361 35 0 29.639 0 23.026V11.974C0 5.361 5.361 0 11.974 0H23.026C29.639 0 35 5.361 35 11.974V23.026C35 29.639 29.639 35 23.026 35H11.974Z" fill="#D4AF37"/>
 <path d="M13.7021 15.125C16.7591 13.666 19.1901 11.156 20.5521 8.05396C19.6631 7.11996 18.5061 6.45296 17.2611 6.05296L16.5941 5.82996C16.5441 5.92696 16.5131 6.03296 16.5051 6.14096C15.4371 9.16696 13.2571 11.612 10.3231 12.991C8.27605 13.97 6.76405 15.749 6.05205 17.885L5.83105 18.551C5.92705 18.601 6.03305 18.631 6.14105 18.64C6.98705 18.951 7.83105 19.352 8.63205 19.842C9.78905 17.78 11.5621 16.13 13.7021 15.125ZM26.6031 15.304C24.9401 17.826 22.6161 19.841 19.8851 21.131C17.6181 22.199 15.8821 24.2 15.0821 26.602L14.8591 27.358C15.7231 28.124 16.7391 28.699 17.8401 29.048L18.5061 29.271C18.5571 29.174 18.5871 29.068 18.5961 28.959C19.6631 25.934 21.8431 23.488 24.7781 22.11C26.8241 21.131 28.3811 19.352 29.0491 17.216L29.2711 16.55C28.3371 16.283 27.4471 15.837 26.6031 15.304ZM13.0791 25.047C14.1871 22.37 16.2471 20.199 18.8621 18.952C21.2641 17.796 23.2651 16.018 24.6441 13.838C23.6211 12.859 22.7761 11.747 22.1541 10.413C20.4881 13.459 17.9041 15.903 14.7701 17.396C12.9461 18.241 11.4781 19.709 10.5881 21.488C11.5671 22.423 12.3681 23.579 12.9901 24.868L13.0791 25.047Z" fill="#080808"/>
 </svg>
-                June
+June
 </a>
 <p class="footer-one-liner">Your AI executive assistant for business travel.</p>
-<p class="footer-entity">© 2026 Tidalpeak Labs Private Ltd.</p>
+<p class="footer-entity">&copy; 2026 Tidalpeak Labs Private Ltd.</p>
 </div>
 <div class="footer-right">
 <a href="#" class="footer-link">Privacy Policy</a>
 <a href="#" class="footer-link">Terms of Service</a>
 </div>
 </footer>
+
 <script>
+/* ===== HERO PARTICLE CANVAS ===== */
+(function() {
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() {
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+for (let i = 0; i < 50; i++) {
+particles.push({
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+r: Math.random() * 1.5 + 0.5,
+dx: (Math.random() - 0.5) * 0.3,
+dy: (Math.random() - 0.5) * 0.3,
+o: Math.random() * 0.4 + 0.1
+});
+}
+function draw() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+particles.forEach(p => {
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+ctx.fillStyle = `rgba(212, 175, 55, ${p.o})`;
+ctx.fill();
+p.x += p.dx;
+p.y += p.dy;
+if (p.x < 0) p.x = canvas.width;
+if (p.x > canvas.width) p.x = 0;
+if (p.y < 0) p.y = canvas.height;
+if (p.y > canvas.height) p.y = 0;
+});
+// Draw connections
+for (let i = 0; i < particles.length; i++) {
+for (let j = i + 1; j < particles.length; j++) {
+const dx = particles[i].x - particles[j].x;
+const dy = particles[i].y - particles[j].y;
+const dist = Math.sqrt(dx * dx + dy * dy);
+if (dist < 120) {
+ctx.beginPath();
+ctx.moveTo(particles[i].x, particles[i].y);
+ctx.lineTo(particles[j].x, particles[j].y);
+ctx.strokeStyle = `rgba(212, 175, 55, ${0.06 * (1 - dist / 120)})`;
+ctx.stroke();
+}
+}
+}
+requestAnimationFrame(draw);
+}
+draw();
+})();
+
+/* ===== SCROLL REVEAL ===== */
+const revealObserver = new IntersectionObserver((entries) => {
+entries.forEach(e => {
+if (e.isIntersecting) {
+e.target.classList.add('visible');
+// Trigger card-specific animations
+if (e.target.id === 'chatCard') startChatAnimation();
+if (e.target.id === 'prefCard') startPrefAnimation();
+if (e.target.id === 'dealCard') startDealAnimation();
+if (e.target.id === 'statusCard') startStatusAnimation();
+}
+});
+}, { threshold: 0.3 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ===== CARD 1: CHAT ANIMATION ===== */
+let chatStarted = false;
+function startChatAnimation() {
+if (chatStarted) return;
+chatStarted = true;
+const body = document.getElementById('chatBody');
+const typing = document.getElementById('typingIndicator');
+const messages = [
+{ type: 'user', text: "I need to be in London next Tuesday for a client meeting at Canary Wharf.", time: '9:41 AM' },
+{ type: 'june', text: "On it! I found a direct Delta flight from JFK departing Monday evening. I also see a Marriott near Canary Wharf with your Bonvoy rate.", time: '9:41 AM' },
+{ type: 'user', text: "Book the window seat and late checkout.", time: '9:42 AM' },
+{ type: 'june', text: "Done! Window seat 14A confirmed. Late checkout until 2 PM secured with your Gold status. I've added everything to your calendar.", time: '9:42 AM' },
+];
+let i = 0;
+function showNext() {
+if (i >= messages.length) {
+setTimeout(() => {
+// Reset for loop
+body.querySelectorAll('.msg, .msg-time').forEach(el => el.remove());
+chatStarted = false;
+startChatAnimation();
+}, 4000);
+return;
+}
+const m = messages[i];
+typing.classList.add('visible');
+setTimeout(() => {
+typing.classList.remove('visible');
+const div = document.createElement('div');
+div.className = `msg msg-${m.type}`;
+div.textContent = m.text;
+body.insertBefore(div, typing);
+const timeDiv = document.createElement('div');
+timeDiv.className = 'msg-time';
+timeDiv.textContent = m.time;
+timeDiv.style.alignSelf = m.type === 'user' ? 'flex-end' : 'flex-start';
+timeDiv.style.opacity = '0';
+body.insertBefore(timeDiv, typing);
+requestAnimationFrame(() => {
+div.classList.add('visible');
+timeDiv.style.opacity = '1';
+timeDiv.style.transition = 'opacity 0.3s';
+});
+body.scrollTop = body.scrollHeight;
+i++;
+setTimeout(showNext, m.type === 'june' ? 1200 : 800);
+}, m.type === 'june' ? 1500 : 600);
+}
+showNext();
+}
+
+/* ===== CARD 2: PREFERENCE ANIMATION ===== */
+let prefStarted = false;
+function startPrefAnimation() {
+if (prefStarted) return;
+prefStarted = true;
+const toggles = ['toggle1', 'toggle2', 'toggle3'];
+const ring = document.getElementById('prefRingCircle');
+const ringText = document.getElementById('prefRingText');
+const budgetFill = document.getElementById('budgetFill');
+const budgetVal = document.getElementById('budgetVal');
+const loungeFill = document.getElementById('loungeFill');
+const loungeVal = document.getElementById('loungeVal');
+let step = 0;
+function nextStep() {
+if (step < 3) {
+document.getElementById(toggles[step]).classList.add('on');
+}
+if (step === 3) {
+budgetFill.style.width = '72%';
+budgetVal.textContent = '$1.8k';
+}
+if (step === 4) {
+loungeFill.style.width = '100%';
+loungeVal.textContent = 'On';
+}
+// Update ring
+const pct = Math.min(100, Math.round(((step + 1) / 5) * 100));
+const offset = 94.2 - (94.2 * pct / 100);
+ring.style.strokeDashoffset = offset;
+ringText.textContent = pct + '%';
+step++;
+if (step <= 5) {
+setTimeout(nextStep, 700);
+} else {
+// Reset after delay
+setTimeout(() => {
+toggles.forEach(id => document.getElementById(id).classList.remove('on'));
+ring.style.strokeDashoffset = '94.2';
+ringText.textContent = '0%';
+budgetFill.style.width = '0%';
+budgetVal.textContent = '$0';
+loungeFill.style.width = '0%';
+loungeVal.textContent = 'Off';
+prefStarted = false;
+}, 4000);
+}
+}
+setTimeout(nextStep, 500);
+}
+
+/* ===== CARD 3: DEAL ANIMATION ===== */
+let dealStarted = false;
+function startDealAnimation() {
+if (dealStarted) return;
+dealStarted = true;
+const flightOld = document.getElementById('flightOld');
+const flightNew = document.getElementById('flightNew');
+const hotelOld = document.getElementById('hotelOld');
+const hotelNew = document.getElementById('hotelNew');
+const savingsBar = document.getElementById('savingsBar');
+const savingsAmount = document.getElementById('savingsAmount');
+const flightRewards = document.getElementById('flightRewards').querySelectorAll('.reward-badge');
+const hotelRewards = document.getElementById('hotelRewards').querySelectorAll('.reward-badge');
+const dealFlight = document.getElementById('dealFlight');
+const dealHotel = document.getElementById('dealHotel');
+// Reset
+flightOld.classList.remove('visible');
+hotelOld.classList.remove('visible');
+savingsBar.classList.remove('visible');
+flightRewards.forEach(b => b.classList.remove('visible'));
+hotelRewards.forEach(b => b.classList.remove('visible'));
+flightNew.textContent = '$1,240';
+hotelNew.textContent = '$890';
+savingsAmount.textContent = '-$0';
+dealFlight.classList.remove('best');
+dealHotel.classList.remove('best');
+setTimeout(() => {
+flightRewards.forEach((b, i) => setTimeout(() => b.classList.add('visible'), i * 200));
+}, 500);
+setTimeout(() => {
+hotelRewards.forEach((b, i) => setTimeout(() => b.classList.add('visible'), i * 200));
+}, 1000);
+setTimeout(() => {
+flightOld.classList.add('visible');
+animateValue(flightNew, 1240, 980, 800, '$');
+dealFlight.classList.add('best');
+}, 1800);
+setTimeout(() => {
+hotelOld.classList.add('visible');
+animateValue(hotelNew, 890, 640, 800, '$');
+dealHotel.classList.add('best');
+}, 2600);
+setTimeout(() => {
+savingsBar.classList.add('visible');
+animateValue(savingsAmount, 0, 510, 600, '-$');
+}, 3500);
+setTimeout(() => { dealStarted = false; }, 8000);
+}
+function animateValue(el, start, end, duration, prefix) {
+const startTime = performance.now();
+function update(now) {
+const elapsed = now - startTime;
+const progress = Math.min(elapsed / duration, 1);
+const eased = 1 - Math.pow(1 - progress, 3);
+const val = Math.round(start + (end - start) * eased);
+el.textContent = prefix + val.toLocaleString();
+if (progress < 1) requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+}
+
+/* ===== CARD 4: STATUS ANIMATION ===== */
+let statusStarted = false;
+function startStatusAnimation() {
+if (statusStarted) return;
+statusStarted = true;
+const steps = document.querySelectorAll('#statusTimeline .timeline-step');
+const dots = document.querySelectorAll('#statusTimeline .timeline-dot');
+const badge = document.getElementById('statusBadge');
+const plane = document.getElementById('statusPlane');
+const toast = document.getElementById('statusToast');
+const depTime = document.getElementById('depTime');
+const arrTime = document.getElementById('arrTime');
+// Reset
+steps.forEach(s => s.classList.remove('visible'));
+dots.forEach((d, i) => { if (i > 0) { d.className = 'timeline-dot'; } });
+badge.className = 'status-badge delayed';
+badge.textContent = 'Delayed';
+toast.classList.remove('visible');
+plane.style.left = '20%';
+depTime.textContent = '08:45';
+arrTime.textContent = '14:20';
+let i = 0;
+function showStep() {
+if (i >= steps.length) {
+setTimeout(() => {
+badge.className = 'status-badge rebooked';
+badge.textContent = 'Rebooked';
+plane.style.left = '65%';
+depTime.textContent = '09:15';
+arrTime.textContent = '13:05';
+}, 300);
+setTimeout(() => { toast.classList.add('visible'); }, 800);
+setTimeout(() => { statusStarted = false; }, 7000);
+return;
+}
+steps[i].classList.add('visible');
+if (i === 1) dots[i].classList.add('active');
+if (i === 2) dots[i].classList.add('active');
+if (i === 3) dots[i].classList.add('success');
+i++;
+setTimeout(showStep, 900);
+}
+setTimeout(showStep, 500);
+}
+
+/* ===== BOARDING PASS 3D TILT ===== */
+(function() {
+const wrap = document.querySelector('.boarding-pass-wrap');
+if (!wrap) return;
+const card = wrap.querySelector('.boarding-pass');
+wrap.addEventListener('mousemove', (e) => {
+const rect = wrap.getBoundingClientRect();
+const x = (e.clientX - rect.left) / rect.width - 0.5;
+const y = (e.clientY - rect.top) / rect.height - 0.5;
+card.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 5}deg)`;
+card.style.boxShadow = `${-x * 20}px ${y * 20}px 60px rgba(0,0,0,0.4)`;
+});
+wrap.addEventListener('mouseleave', () => {
+card.style.transform = 'rotateY(0) rotateX(0)';
+card.style.boxShadow = '0 40px 100px rgba(0,0,0,0.6)';
+});
+})();
+
+/* ===== WAITLIST FORM ===== */
 const form = document.getElementById('waitlistForm');
 const emailInput = document.getElementById('workEmail');
 const emailError = document.getElementById('emailError');
 const confirmedContent = document.getElementById('confirmedContent');
 const displayEmail = document.getElementById('displayEmail');
-const boardingPassCard = document.getElementById('boardingPassCard');
 const carrierLabel = document.getElementById('carrierLabel');
 const carrierValue = document.getElementById('carrierValue');
 const classLabel = document.getElementById('classLabel');
@@ -762,28 +1614,28 @@ const personalDomains = [
 'icloud.com', 'aol.com', 'me.com', 'mail.com', 'msn.com',
 'live.com', 'yandex.com', 'protonmail.com'
 ];
-        form.onsubmit = (e) => {
-            e.preventDefault();
-const emailValueStr = emailInput.value.toLowerCase();
-const domain = emailValueStr.substring(emailValueStr.lastIndexOf("@") + 1);
+form.onsubmit = (e) => {
+e.preventDefault();
+const emailVal = emailInput.value.toLowerCase();
+const domain = emailVal.substring(emailVal.lastIndexOf("@") + 1);
 if (personalDomains.includes(domain)) {
-                emailError.style.display = 'block';
-                emailInput.style.borderBottomColor = '#ef4444';
+emailError.style.display = 'block';
+emailInput.style.borderBottomColor = '#ef4444';
 return false;
 }
-            form.style.display = 'none';
-            carrierLabel.innerText = "Status";
-            carrierValue.innerText = "WAITLISTED";
-            classLabel.innerText = "Group";
-            classValue.innerText = "PRIORITY 01";
-            seatLabel.innerText = "Position";
-            seatValue.innerText = "00" + (Math.floor(Math.random() * 89) + 10);
-            displayEmail.innerText = emailValueStr;
-            confirmedContent.style.display = 'block';
+form.style.display = 'none';
+carrierLabel.innerText = "Status";
+carrierValue.innerText = "WAITLISTED";
+classLabel.innerText = "Group";
+classValue.innerText = "PRIORITY 01";
+seatLabel.innerText = "Position";
+seatValue.innerText = "00" + (Math.floor(Math.random() * 89) + 10);
+displayEmail.innerText = emailVal;
+confirmedContent.style.display = 'block';
 };
-        emailInput.oninput = () => {
-            emailError.style.display = 'none';
-            emailInput.style.borderBottomColor = 'var(--border)';
+emailInput.oninput = () => {
+emailError.style.display = 'none';
+emailInput.style.borderBottomColor = 'var(--border)';
 };
 </script>
 </body>
